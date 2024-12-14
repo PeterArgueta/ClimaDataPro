@@ -147,7 +147,7 @@
             <div class="weather-display">
                 <div class="weather-card">
                     <i class="fas fa-calendar-day"></i>
-                    <h5>Pronóstico Próximas Horas</h5>
+                    <h6>Pronóstico Próxima Hora</h6>
                     <div id="forecast-display" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;"></div>
                 </div>
                 <div class="weather-card">
@@ -216,9 +216,7 @@
                 })
                 .catch(error => console.error('Error al obtener datos:', error));
         }
-        document.addEventListener('DOMContentLoaded', () => {
-            updateWeather();
-        });
+        
     function updateForecast(location = 'Guatemala') {
             const apiKey = 'fa0ed160c4624f128be184513241312';
             const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=1&lang=es`;
@@ -228,7 +226,7 @@
                     const forecastDisplay = document.getElementById('forecast-display');
                     forecastDisplay.innerHTML = '';
                     const currentHour = new Date().getHours();
-                    const hours = data.forecast.forecastday[0].hour.slice(currentHour, currentHour + 5);
+                    const hours = data.forecast.forecastday[0].hour.slice(currentHour, currentHour + 1);
 
                     hours.forEach(hour => {
                         const forecastCard = document.createElement('div');
@@ -238,13 +236,14 @@
                         `;
                         forecastDisplay.appendChild(forecastCard);
                     });
-                    });
-                }       
+                })
+                .catch(error => console.error('Error al obtener el pronóstico:', error));
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
-            updateWeather();
-            updateForecast();
-        });
+    updateWeather();
+    updateForecast();
+});
 
 </script>
 </body>
