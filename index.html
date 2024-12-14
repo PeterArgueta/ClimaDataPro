@@ -9,13 +9,17 @@
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <header>ClimaData GT</header>
         <a href="#inicio"><i class="fas fa-home"></i> Inicio</a>
         <a href="#subir-datos"><i class="fas fa-upload"></i> Subir Datos</a>
         <a href="#visualizaciones"><i class="fas fa-chart-line"></i> Visualizaciones Públicas</a>
         <a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a>
     </div>
+    
+    <!-- Botón de menú -->
+    <button id="menu-toggle" class="menu-toggle"><i class="fas fa-bars"></i></button>
+    
     <div class="main-content" id="inicio">
         <div class="container">
             <h3><i class="fas fa-thermometer-half"></i> Clima Actual en <span id="location-name">Guatemala</span></h3>
