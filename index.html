@@ -16,7 +16,7 @@
             overflow: hidden;
         }
         .sidebar {
-            width: 250px;
+            width: 180px;
             background: #003366;
             color: white;
             height: 100vh;
@@ -41,7 +41,7 @@
             background: #00509E;
         }
         .main-content {
-            margin-left: 250px;
+            margin-left: 180px;
             padding: 2rem;
             overflow-y: auto;
             background: #f4f4f9;
@@ -53,6 +53,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             margin-bottom: 2rem;
+            text-align: center;
         }
         .weather-display {
             display: grid;
@@ -80,18 +81,18 @@
             padding: 1rem;
             position: fixed;
             bottom: 0;
-            width: 100%;
-            left: 250px;
+            width: calc(100% - 180px);
+            left: 180px;
         }
         @media (max-width: 768px) {
             .sidebar {
-                width: 200px;
+                width: 150px;
             }
             .main-content {
-                margin-left: 200px;
+                margin-left: 150px;
             }
             footer {
-                left: 200px;
+                left: 150px;
             }
         }
         @media (max-width: 480px) {
@@ -103,6 +104,7 @@
             }
             footer {
                 left: 0;
+                width: 100%;
             }
         }
     </style>
@@ -147,7 +149,7 @@
             <div class="weather-display">
                 <div class="weather-card">
                     <i class="fas fa-calendar-day"></i>
-                    <h6>Pronóstico Próxima Hora</h6>
+                    <h5>Pronóstico Próxima Hora</h5>
                     <div id="forecast-display" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;"></div>
                 </div>
                 <div class="weather-card">
@@ -232,13 +234,14 @@
                         const forecastCard = document.createElement('div');
                         forecastCard.className = 'weather-card';
                         forecastCard.innerHTML = `
+                            <p><strong>${hour.time.split(' ')[1]}</strong></p>
+                            <p>${hour.temp_c}°C</p>
                             <p>${hour.condition.text} <img src="https:${hour.condition.icon}" alt="${hour.condition.text}" style="width: 20px; vertical-align: middle; margin-left: 5px;"/></p>
                         `;
                         forecastDisplay.appendChild(forecastCard);
                     });
-                })
-                .catch(error => console.error('Error al obtener el pronóstico:', error));
-        }
+                    });
+         }
 
         document.addEventListener('DOMContentLoaded', () => {
     updateWeather();
