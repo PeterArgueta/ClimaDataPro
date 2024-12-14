@@ -108,7 +108,7 @@
             <h3><i class="fas fa-thermometer-half weather-icon"></i> Clima Actual</h3>
             <div class="dropdown">
                 <label for="locations">Selecciona un departamento:</label>
-                <select id="locations" onchange="updateWeather()">
+                <select id="locations" onchange="updateWeather(this.value)">
                     <option value="Guatemala">Guatemala</option>
                     <option value="Quetzaltenango">Quetzaltenango</option>
                     <option value="Petén">Petén</option>
@@ -226,7 +226,7 @@
                 })
                 .catch(error => console.error('Error al obtener el pronóstico:', error));
         }
-function updateWeather(location) {
+function updateWeather(location = document.getElementById('locations').value) {
             const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&lang=es`;
 
             fetch(url)
