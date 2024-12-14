@@ -157,10 +157,11 @@ footer {
     left: 180px;
 }
 
+
 .menu-toggle {
-    display: none;
+    display: none; /* Solo se muestra en móviles */
     position: fixed;
-    top: 10px;
+    top: 15px; /* Baja un poco el botón para evitar superposición */
     left: 10px;
     background: #00509E;
     color: white;
@@ -168,8 +169,24 @@ footer {
     padding: 0.5rem;
     border-radius: 5px;
     cursor: pointer;
-    z-index: 1001; /* Asegura que esté por encima del contenido */
+    z-index: 1001; /* Asegura que esté por encima de otros elementos */
 }
+
+@media (max-width: 480px) {
+    .menu-toggle {
+        display: block;
+    }
+
+
+    .sidebar header {
+        margin-top: 40px; /* Cambia este valor para bajar el encabezado */
+        text-align: center; /* Asegura que esté centrado */
+        font-size: 1.2rem; /* Ajusta el tamaño de fuente si es necesario */
+    }
+}
+
+
+
 
 .menu-toggle i {
     font-size: 1.2rem;
