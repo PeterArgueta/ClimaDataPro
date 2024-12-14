@@ -79,14 +79,72 @@ body {
     min-height: 180px;
 }
 
-.weather-card p {
-    font-size: clamp(0.8rem, 2vw, 1rem);
-    word-wrap: break-word;
+
+
+.weather-card h5 {
+    font-size: clamp(0.8rem, 2vw, 1rem); /* Ajusta el tamaño del texto relativo a la pantalla */
+    white-space: normal; /* Permite que el texto se ajuste al ancho del contenedor */
+    word-wrap: break-word; /* Divide palabras largas si es necesario */
+    overflow: hidden; /* Oculta el texto que exceda el límite */
     text-align: center;
+}
+
+.weather-card p {
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem); /* Ajusta el tamaño del texto */
+    white-space: nowrap; /* Evita que el texto ocupe más de una línea */
+    overflow: hidden; /* Oculta el exceso de texto */
+    text-overflow: ellipsis; /* Agrega "..." al texto truncado */
+    text-align: center;
+    max-width: 100%; /* Asegura que el texto no exceda el ancho del contenedor */
+}
+
+
+.weather-card {
+    height: auto;
+    min-height: 150px; /* Altura mínima razonable para mantener uniformidad */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.weather-card p#fecha_hora {
+    font-size: 0.8rem; /* Tamaño de texto reducido para fechas */
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    max-width: 100%; /* Ajusta el ancho máximo al de la tarjeta */
 }
+
+.weather-card p#forecast-display {
+    font-size: 0.8rem; /* Tamaño de texto reducido */
+    white-space: nowrap; /* Evita que el texto ocupe más de una línea */
+    overflow: hidden; /* Oculta el texto que excede el límite */
+    text-overflow: ellipsis; /* Muestra puntos suspensivos si el texto es muy largo */
+    max-width: 100%; /* Asegura que el texto no exceda el ancho de la tarjeta */
+    text-align: center;
+}
+
+
+
+@media (max-width: 480px) {
+    .weather-card {
+        min-height: 120px; /* Reduce la altura mínima para pantallas pequeñas */
+    }
+
+    .weather-card h5, .weather-card p {
+        font-size: 0.7rem; /* Tamaño de texto más pequeño en móviles */
+    }
+
+    .weather-card p#fecha_hora {
+        font-size: 0.7rem;
+        text-overflow: ellipsis; /* Trunca el texto si es muy largo */
+    }
+    
+}
+
+
 
 footer {
     background: #004B87;
@@ -157,4 +215,22 @@ footer {
     .weather-display {
         gap: 1rem;
     }
+}
+
+@media (max-width: 480px) {
+    .weather-card p#forecast-display {
+        font-size: 0.7rem; /* Reduce el tamaño del texto en móviles */
+        text-overflow: ellipsis; /* Trunca el texto si es muy largo */
+    }
+}
+
+
+#forecast-display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%; /* Limita el ancho del contenedor */
+    overflow: hidden; /* Asegura que el contenido no exceda los bordes */
+    text-overflow: ellipsis; /* Aplica puntos suspensivos si es necesario */
 }
