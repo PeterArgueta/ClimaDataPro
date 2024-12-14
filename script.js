@@ -60,3 +60,16 @@ document.getElementById('menu-toggle').addEventListener('click', function () {
     const sidebar = document.getElementById('sidebar');
     sidebar.classList.toggle('active');
 });
+
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const mapLink = document.querySelector('a[href="maps/mapa_regiones_climaticas.html"]');
+
+        if (window.innerWidth <= 768) { // Dispositivos móviles y tablets
+            mapLink.setAttribute('target', '_blank'); // Abre en una nueva pestaña
+        } else {
+            mapLink.removeAttribute('target'); // Comportamiento normal en computadoras
+        }
+    });
+
