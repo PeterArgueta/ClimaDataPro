@@ -258,30 +258,14 @@ footer {
     text-overflow: ellipsis; /* Aplica puntos suspensivos si es necesario */
 }
 
-.map-container {
-    width: 100%;
-    height: auto;
-    margin-bottom: 1rem;
-    overflow: hidden; /* Evita que contenido se desborde */
+/* Mostrar iframe en pantallas grandes */
+.map-desktop {
+    display: block;
 }
 
-.map-container iframe {
-    width: 100%; /* Ocupa todo el ancho */
-    height: 500px; /* Altura estándar para computadoras */
-    border: none; /* Sin bordes */
-}
-
-/* Ajustes responsivos */
+/* Ocultar iframe en dispositivos móviles */
 @media (max-width: 768px) {
-    .map-container iframe {
-        height: 350px; /* Reduce la altura en tablets */
-    }
-}
-
-@media (max-width: 480px) {
-    .map-container iframe {
-        height: 250px; /* Reduce aún más la altura en teléfonos */
-        transform: scale(0.9); /* Ajusta el zoom para hacer más pequeño el contenido */
-        transform-origin: top left; /* Mantiene la esquina superior izquierda como ancla */
+    .map-desktop {
+        display: none;
     }
 }
