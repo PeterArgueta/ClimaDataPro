@@ -234,8 +234,6 @@
                         const forecastCard = document.createElement('div');
                         forecastCard.className = 'weather-card';
                         forecastCard.innerHTML = `
-                            <p><strong>${hour.time.split(' ')[1]}</strong></p>
-                            <p>${hour.temp_c}°C</p>
                             <p>${hour.condition.text} <img src="https:${hour.condition.icon}" alt="${hour.condition.text}" style="width: 20px; vertical-align: middle; margin-left: 5px;"/></p>
                         `;
                         forecastDisplay.appendChild(forecastCard);
