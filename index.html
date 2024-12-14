@@ -146,6 +146,11 @@
             </div>
             <div class="weather-display">
                 <div class="weather-card">
+                    <i class="fas fa-calendar-day"></i>
+                    <h5>Pronóstico Próximas Horas</h5>
+                    <div id="forecast-display" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;"></div>
+                </div>
+                <div class="weather-card">
                     <i class="fas fa-temperature-high"></i>
                     <h5>Temperatura</h5>
                     <p id="temp">--°C</p>
@@ -214,6 +219,33 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateWeather();
         });
-    </script>
+    function updateForecast(location = 'Guatemala') {
+            const apiKey = 'fa0ed160c4624f128be184513241312';
+            const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=1&lang=es`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const forecastDisplay = document.getElementById('forecast-display');
+                    forecastDisplay.innerHTML = '';
+                    const currentHour = new Date().getHours();
+                    const hours = data.forecast.forecastday[0].hour.slice(currentHour, currentHour + 5);
+
+                    hours.forEach(hour => {
+                        const forecastCard = document.createElement('div');
+                        forecastCard.className = 'weather-card';
+                        forecastCard.innerHTML = `
+                            <p>${hour.condition.text} <img src="https:${hour.condition.icon}" alt="${hour.condition.text}" style="width: 20px; vertical-align: middle; margin-left: 5px;"/></p>
+                        `;
+                        forecastDisplay.appendChild(forecastCard);
+                    });
+                    });
+                }       
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateWeather();
+            updateForecast();
+        });
+
+</script>
 </body>
 </html>
