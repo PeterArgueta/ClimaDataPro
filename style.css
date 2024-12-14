@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
@@ -7,7 +6,6 @@ body {
     height: 100vh;
     overflow: hidden;
 }
-
 .sidebar {
     width: 180px;
     background: #003366;
@@ -17,7 +15,6 @@ body {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     position: fixed;
 }
-
 .sidebar a {
     display: flex;
     align-items: center;
@@ -28,15 +25,12 @@ body {
     border-radius: 5px;
     transition: background 0.3s ease;
 }
-
 .sidebar a i {
     margin-right: 10px;
 }
-
 .sidebar a:hover {
     background: #00509E;
 }
-
 .main-content {
     margin-left: 180px;
     padding: 2rem;
@@ -44,7 +38,6 @@ body {
     background: #f4f4f9;
     flex: 1;
 }
-
 .container {
     padding: 1.5rem;
     background: white;
@@ -56,9 +49,12 @@ body {
 
 .weather-display {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 2fr)); /* Columnas ajustables */
+    gap: 0.4rem; /* Espaciado entre las tarjetas */
+    align-items: stretch; /* Todas las tarjetas tendrán la misma altura */
+    justify-content: center; /* Alinea las tarjetas en el centro del contenedor */
 }
+
 
 .weather-card {
     background: #e8f4fa;
@@ -72,6 +68,15 @@ body {
     height: 150px;
 }
 
+.weather-card p {
+    font-size: calc(0.85rem - 0.02vw); /* Ajusta el tamaño relativo al ancho de la pantalla */
+    word-wrap: break-word; /* Permite dividir palabras largas */
+    text-align: center;
+}
+
+
+
+
 footer {
     background: #004B87;
     color: white;
@@ -81,4 +86,27 @@ footer {
     bottom: 0;
     width: calc(100% - 180px);
     left: 180px;
+}
+@media (max-width: 768px) {
+    .sidebar {
+        width: 150px;
+    }
+    .main-content {
+        margin-left: 150px;
+    }
+    footer {
+        left: 150px;
+    }
+}
+@media (max-width: 480px) {
+    .sidebar {
+        display: none;
+    }
+    .main-content {
+        margin: 0;
+    }
+    footer {
+        left: 0;
+        width: 100%;
+    }
 }
