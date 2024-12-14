@@ -4,12 +4,16 @@ function updateWeather(location = 'Guatemala') {
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            document.getElementById('temp').textContent = `${data.current.temp_c}°C`;
-            document.getElementById('humedad').textContent = `${data.current.humidity}%`;
-            document.getElementById('viento').textContent = `${data.current.wind_kph} km/h`;
-            document.getElementById('fecha_hora').textContent = data.location.localtime;
-            document.getElementById('descripcion').textContent = data.current.condition.text;
-            document.getElementById('location-name').textContent = data.location.name;
+            if (data && data.current && data.location) {
+                document.getElementById('temp').textContent = `${data.current.temp_c}°C`;
+                document.getElementById('humedad').textContent = `${data.current.humidity}%`;
+                document.getElementById('viento').textContent = `${data.current.wind_kph} km/h`;
+                document.getElementById('fecha_hora').textContent = data.location.localtime;
+                document.getElementById('descripcion').textContent = data.current.condition.text;
+                document.getElementById('location-name').textContent = data.location.name;
+            } else {
+                console.error('Datos del clima no disponibles');
+            }
         })
         .catch(error => console.error('Error al obtener datos:', error));
 }
@@ -22,15 +26,27 @@ function updateForecast(location = 'Guatemala') {
         .then(data => {
             const forecastDisplay = document.getElementById('forecast-display');
             forecastDisplay.innerHTML = '';
-            const currentHour = new Date().getHours();
-            const hours = data.forecast.forecastday[0].hour.slice(currentHour, currentHour + 1);
+            if (data && data.forecast && data.forecast.forecastday[0]) {
+                const currentHour = new Date().getHours();
+                const hours = data.forecast.forecastday[0].hour.slice(currentHour, currentHour + 1);
+                
+                hours.forEach(hour => {
+                    const truncatedText = hour.condition.text.length > 30 
+                        ? hour.condition.text.substring(0, 30) + '...' 
+                        : hour.condition.text;
 
-            hours.forEach(hour => {
-                const forecastCard = `
-                    <p>${hour.condition.text} <img src="https:${hour.condition.icon}" alt="${hour.condition.text}" style="width: 30px;"/></p>
-                `;
-                forecastDisplay.innerHTML += forecastCard;
-            });
+                    const forecastCard = `
+                        <p>${truncatedText} 
+                            <img src="https:${hour.condition.icon}" 
+                                 alt="${hour.condition.text}" 
+                                 style="width: 30px;"/>
+                        </p>
+                    `;
+                    forecastDisplay.innerHTML += forecastCard;
+                });
+            } else {
+                forecastDisplay.innerHTML = '<p>Pronóstico no disponible</p>';
+            }
         })
         .catch(error => console.error('Error al obtener el pronóstico:', error));
 }
@@ -44,4 +60,3 @@ document.getElementById('menu-toggle').addEventListener('click', function () {
     const sidebar = document.getElementById('sidebar');
     sidebar.classList.toggle('active');
 });
-

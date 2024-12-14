@@ -150,7 +150,7 @@ footer {
     background: #004B87;
     color: white;
     text-align: center;
-    padding: 1rem;
+    padding: 0.2rem;
     position: fixed;
     bottom: 0;
     width: calc(100% - 180px);
@@ -221,6 +221,13 @@ footer {
     .weather-card p#forecast-display {
         font-size: 0.7rem; /* Reduce el tamaño del texto en móviles */
         text-overflow: ellipsis; /* Trunca el texto si es muy largo */
+    }
+}
+
+
+@media (max-width: 480px) {
+    footer {
+        display: none; /* Oculta el footer en dispositivos móviles */
     }
 }
 
