@@ -100,6 +100,10 @@
     </nav>
 
     <div class="main-container">
+        
+            </div>
+            </div>
+        </div>
         <div class="container">
             <h3><i class="fas fa-thermometer-half weather-icon"></i> Clima Actual</h3>
             <div class="dropdown">
@@ -129,6 +133,14 @@
                 </select>
             </div>
             <div class="weather-display">
+                <div class="weather-card">
+                    <i class="fas fa-calendar-day"></i>
+                    <h5>Pronóstico Próximas Horas</h5>
+                    <p id="forecast-time">--</p>
+                    <p><strong>Temp:</strong> <span id="forecast-temp">--</span>°C</p>
+                    <p><strong>Condición:</strong> <span id="forecast-condition">--</span></p>
+                    <img id="forecast-icon" src="" alt="Condición" style="max-width: 50px; margin: 0 auto;" />
+                </div>
                 <div class="weather-card">
                     <i class="fas fa-temperature-high"></i>
                     <h5>Temperatura</h5>
@@ -190,8 +202,31 @@
             return date.toLocaleDateString('es-ES', options);
         }
 
-        function updateWeather() {
-            const location = document.getElementById('locations').value;
+        function updateForecast(location) {
+            const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=1&lang=es`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const currentHour = new Date().getHours();
+                    const nextHourData = currentHour === 23 ? data.forecast.forecastday[0].hour[0] : data.forecast.forecastday[0].hour[currentHour + 1];
+
+                    if (nextHourData) {
+                        document.getElementById('forecast-time').textContent = nextHourData.time.split(' ')[1];
+                        document.getElementById('forecast-temp').textContent = nextHourData.temp_c;
+                        document.getElementById('forecast-condition').textContent = nextHourData.condition.text;
+                        document.getElementById('forecast-icon').src = `https:${nextHourData.condition.icon}`;
+                        document.getElementById('forecast-icon').alt = nextHourData.condition.text;
+                    } else {
+                        document.getElementById('forecast-time').textContent = 'No disponible';
+                        document.getElementById('forecast-temp').textContent = '--';
+                        document.getElementById('forecast-condition').textContent = 'Sin datos';
+                        document.getElementById('forecast-icon').src = '';
+                    }
+                })
+                .catch(error => console.error('Error al obtener el pronóstico:', error));
+        }
+function updateWeather(location) {
             const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&lang=es`;
 
             fetch(url)
@@ -202,6 +237,7 @@
                     document.getElementById('viento').textContent = `${data.current.wind_kph} km/h`;
                     document.getElementById('fecha_hora').textContent = formatTimestamp(data.location.localtime_epoch);
                     document.getElementById('descripcion').textContent = data.current.condition.text;
+                    updateForecast(location);
                 })
                 .catch(error => console.error('Error al obtener datos:', error));
         }
@@ -211,29 +247,22 @@
             navigator.geolocation.getCurrentPosition(position => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
-                const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}&lang=es`;
-
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('temp').textContent = `${data.current.temp_c}°C`;
-                        document.getElementById('humedad').textContent = `${data.current.humidity}%`;
-                        document.getElementById('viento').textContent = `${data.current.wind_kph} km/h`;
-                        document.getElementById('fecha_hora').textContent = formatTimestamp(data.location.localtime_epoch);
-                        document.getElementById('descripcion').textContent = data.current.condition.text;
-                    })
-                    .catch(error => console.error('Error al obtener datos de geolocalización:', error));
+                const location = `${lat},${lon}`;
+                updateWeather(location);
+                updateForecast(location);
             }, error => {
                 console.error('Error en geolocalización:', error);
-                updateWeather(); // Llama a los datos predeterminados de Guatemala
+                updateWeather('Guatemala'); // Llama a los datos predeterminados de Guatemala
+                updateForecast('Guatemala');
             });
         } else {
-            console.error('Geolocalización no soportada');
-            updateWeather(); // Llama a los datos predeterminados de Guatemala
-        }
+    console.error('Geolocalización no soportada');
+    updateWeather('Guatemala');
+    updateForecast('Guatemala');
+}
 
         // Cargar datos iniciales para Guatemala
-        updateWeather();
+        updateWeather('Guatemala');
     </script>
 </body>
 </html>
